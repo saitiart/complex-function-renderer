@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebGPU Complex Function Renderer</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #canvas-webgpu {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #ui-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    
+    #gui {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+  </style>
+</head>
+<body>
+
+<canvas id="canvas-webgpu"></canvas>
+
+<div id="ui-container">
+  <div id="stats"></div>
+  <div id="gui">
+    <div id="mode-toggle" style="padding:8px; display:flex; align-items:center; gap:8px;">
+      <button id="toggleBtn" style="padding:6px 12px; cursor:pointer; background:black; color:orange; border:none; border-radius:4px; font-size:12px;">
+        Switch Mode
+      </button>
+      <span id="modeLabel" style="color:black; font-size:12px;"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modes = [
+    { src: '/src/main.ts', label: 'Complex Functions' },
+    { src: '/src/implicit-2/implicit.ts', label: '4D Implicit' },
+  ];
+
+  let currentMode = parseInt(localStorage.getItem('mode') || '0');
+
+  function setMode(index) {
+    localStorage.setItem('mode', index.toString());
+    window.location.reload();
+  }
+
+  document.getElementById('modeLabel').textContent = modes[currentMode].label;
+  document.getElementById('toggleBtn').addEventListener('click', () => {
+    setMode((currentMode + 1) % modes.length);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      setMode((currentMode + 1) % modes.length);
+    }
+  });
+</script>
+
+<script type="module">
+  const modes = ['/src/main.ts', '/src/implicit/implicit-mesh.ts'];
+  // const modes = ['/src/main.ts', '/src/implicit/implicit-pong.ts'];
+  
+  import(modes[currentMode]);
+</script>
+</body>
+</html>
