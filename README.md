@@ -8,7 +8,9 @@ of a 4D field via a marching-tesseract scheme, in point-cloud and connected-mesh
 form.
 
 Accompanying paper: **Rendering Explicit and Implicit Complex Functions in 4D:
-A WebGPU-Based Approach**, Web3D '26.
+A WebGPU-Based Approach**, Web3D '26. 
+
+The PDF can be accessed read here <https://dl.acm.org/doi/epdf/10.1145/3822516.3834886>
 
 ## Getting Started
 
